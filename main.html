@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site-title">极限游戏 | 官方网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #0f0f1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: rgba(10, 10, 20, 0.8);
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #222266;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8844ff;
+            text-shadow: 0 0 10px rgba(136, 68, 255, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 600;
+        }
+        
+        nav ul li a:hover {
+            color: #8844ff;
+            text-shadow: 0 0 5px rgba(136, 68, 255, 0.7);
+        }
+        
+        .hero {
+            height: 80vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 60px;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(10, 10, 20, 0.5), rgba(10, 10, 20, 0.3));
+            z-index: 0;
+        }
+        
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(136, 68, 255, 0.7);
+            font-weight: 800;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(to right, #8844ff, #cc44ff);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(136, 68, 255, 0.5);
+        }
+        
+        .featured-games {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #8844ff;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, #8844ff, #cc44ff);
+            border-radius: 2px;
+        }
+        
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .game-card {
+            background-color: rgba(30, 30, 50, 0.6);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            border: 1px solid #222266;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .game-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .game-info {
+            padding: 1.5rem;
+        }
+        
+        .game-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+        
+        .game-info p {
+            font-size: 0.9rem;
+            color: #bbbbbb;
+            margin-bottom: 1rem;
+        }
+        
+        .game-link {
+            color: #8844ff;
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .game-link:hover {
+            text-decoration: underline;
+        }
+        
+        footer {
+            background-color: #0a0a14;
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid #222266;
+        }
+        
+        .glow-effect {
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #8844ff, 0 0 10px #8844ff, 0 0 15px #8844ff;
+            }
+            to {
+                text-shadow: 0 0 10px #8844ff, 0 0 20px #8844ff, 0 0 30px #8844ff;
+            }
+        }
+        
+        .language-selector {
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .language-selector select {
+            background-color: rgba(30, 30, 50, 0.6);
+            color: #e0e0e0;
+            border: 1px solid #222266;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .language-selector select:focus {
+            outline: none;
+            border-color: #8844ff;
+        }
+        
+        /* 响应式设计 */
+        @media screen and (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-selector {
+                margin: 10px 0 0 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo" data-i18n="site-name">极限游戏</div>
+        <nav>
+            <ul>
+                <li><a href="#" data-i18n="nav-about">关于我们</a></li>
+                <li class="language-selector">
+                    <select id="language-select">
+                        <option value="zh">中文</option>
+                        <option value="en">English</option>
+                        <!-- <option value="ja">日本語</option>
+                        <option value="ko">한국어</option> -->
+                    </select>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <img src="./images/a.png" alt="主推游戏宣传图" class="hero-video">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="glow-effect" data-i18n="hero-title">暗影崛起: 永恒征程</h1>
+            <p data-i18n="hero-description">踏上一段史诗般的冒险，在这个开放世界中探索未知领域，与各种敌人战斗，揭开古老文明的秘密。通过独特的技能树和装备系统自定义你的角色。</p>
+            <a href="./post.html" class="cta-button" data-i18n="cta-play">游戏详情</a>
+        </div>
+    </section>
+    
+    <section class="featured-games">
+        <h2 class="section-title" data-i18n="featured-title">经典游戏</h2>
+        <div class="games-grid">
+            <div class="game-card">
+                <img src="/api/placeholder/300/150" alt="游戏1">
+                <div class="game-info">
+                    <h3 data-i18n="game1-title">银河守护者</h3>
+                    <p data-i18n="game1-desc">在太空中展开惊险的战略战斗，保卫银河系不受外星威胁。组建你的舰队，升级武器，征服宇宙。</p>
+                    <a href="#" class="game-link" data-i18n="learn-more">了解更多 →</a>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="/api/placeholder/300/150" alt="游戏2">
+                <div class="game-info">
+                    <h3 data-i18n="game2-title">幻想世界</h3>
+                    <p data-i18n="game2-desc">进入一个充满魔法和神秘生物的奇幻世界，完成史诗任务，与朋友一起冒险，成为传说中的英雄。</p>
+                    <a href="#" class="game-link" data-i18n="learn-more">了解更多 →</a>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="/api/placeholder/300/150" alt="游戏3">
+                <div class="game-info">
+                    <h3 data-i18n="game3-title">赛道狂飙</h3>
+                    <p data-i18n="game3-desc">体验速度与激情，在全球各地的赛道上与对手一较高下。解锁豪华跑车，自定义改装，成为赛车冠军。</p>
+                    <a href="#" class="game-link" data-i18n="learn-more">了解更多 →</a>
+                </div>
+            </div>
+            
+            <div class="game-card">
+                <img src="/api/placeholder/300/150" alt="游戏4">
+                <div class="game-info">
+                    <h3 data-i18n="game4-title">城市建设者</h3>
+                    <p data-i18n="game4-desc">设计、建造和管理你自己的城市。解决城市规划问题，平衡资源，创造一个繁荣的大都市。</p>
+                    <a href="#" class="game-link" data-i18n="learn-more">了解更多 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p data-i18n="footer-copyright">&copy; 2025 极限游戏 | 版权所有</p>
+    </footer>
+
+    <script>
+        // 多语言支持
+        const translations = {
+            'zh': {
+                'site-title': '极限游戏 | 官方网站',
+                'site-name': '极限游戏',
+                'nav-home': '首页',
+                'nav-games': '游戏',
+                'nav-download': '下载',
+                'nav-news': '新闻',
+                'nav-about': '关于我们',
+                'hero-title': '暗影崛起: 永恒征程',
+                'hero-description': '踏上一段史诗般的冒险，在这个开放世界中探索未知领域，与各种敌人战斗，揭开古老文明的秘密。通过独特的技能树和装备系统自定义你的角色。',
+                'cta-play': '游戏详情',
+                'featured-title': '经典游戏',
+                'game1-title': '银河守护者',
+                'game1-desc': '在太空中展开惊险的战略战斗，保卫银河系不受外星威胁。组建你的舰队，升级武器，征服宇宙。',
+                'game2-title': '幻想世界',
+                'game2-desc': '进入一个充满魔法和神秘生物的奇幻世界，完成史诗任务，与朋友一起冒险，成为传说中的英雄。',
+                'game3-title': '赛道狂飙',
+                'game3-desc': '体验速度与激情，在全球各地的赛道上与对手一较高下。解锁豪华跑车，自定义改装，成为赛车冠军。',
+                'game4-title': '城市建设者',
+                'game4-desc': '设计、建造和管理你自己的城市。解决城市规划问题，平衡资源，创造一个繁荣的大都市。',
+                'learn-more': '了解更多 →',
+                'footer-copyright': '© 2025 极限游戏 | 版权所有'
+            },
+            'en': {
+                'site-title': 'Extreme Games | Official Website',
+                'site-name': 'Extreme Games',
+                'nav-home': 'Home',
+                'nav-games': 'Games',
+                'nav-download': 'Download',
+                'nav-news': 'News',
+                'nav-about': 'About Us',
+                'hero-title': 'Shadow Rising: Eternal Journey',
+                'hero-description': 'Embark on an epic adventure, explore unknown territories in this open world, battle various enemies, and uncover the secrets of an ancient civilization. Customize your character through a unique skill tree and equipment system.',
+                'cta-play': 'Detail',
+                'featured-title': 'Classic Games',
+                'game1-title': 'Galaxy Guardians',
+                'game1-desc': 'Engage in thrilling strategic battles in space, defending the galaxy from alien threats. Build your fleet, upgrade weapons, and conquer the universe.',
+                'game2-title': 'Fantasy World',
+                'game2-desc': 'Enter a fantasy world filled with magic and mysterious creatures, complete epic quests, adventure with friends, and become a legendary hero.',
+                'game3-title': 'Track Fury',
+                'game3-desc': 'Experience speed and excitement, competing against opponents on tracks around the world. Unlock luxury cars, customize modifications, and become a racing champion.',
+                'game4-title': 'City Builder',
+                'game4-desc': 'Design, build, and manage your own city. Solve urban planning problems, balance resources, and create a thriving metropolis.',
+                'learn-more': 'Learn More →',
+                'footer-copyright': '© 2025 Extreme Games | All Rights Reserved'
+            },
+            'ja': {
+                'site-title': 'エクストリームゲームズ | 公式サイト',
+                'site-name': 'エクストリームゲームズ',
+                'nav-home': 'ホーム',
+                'nav-games': 'ゲーム',
+                'nav-download': 'ダウンロード',
+                'nav-news': 'ニュース',
+                'nav-about': '会社概要',
+                'hero-title': 'シャドウライジング：永遠の旅',
+                'hero-description': '壮大な冒険に出かけ、このオープンワールドで未知の領域を探索し、様々な敵と戦い、古代文明の秘密を明らかにしましょう。独自のスキルツリーと装備システムでキャラクターをカスタマイズできます。',
+                'cta-play': '今すぐプレイ',
+                'featured-title': '人気ゲーム',
+                'game1-title': 'ギャラクシーガーディアンズ',
+                'game1-desc': '宇宙でスリリングな戦略バトルを展開し、銀河系を外部の脅威から守ります。艦隊を構築し、武器をアップグレードし、宇宙を征服しましょう。',
+                'game2-title': 'ファンタジーワールド',
+                'game2-desc': '魔法と神秘的な生き物で満ちたファンタジーの世界に入り、壮大なクエストを完了し、友達と冒険し、伝説の英雄になりましょう。',
+                'game3-title': 'トラックフューリー',
+                'game3-desc': 'スピードと興奮を体験し、世界中のトラックで対戦相手と競争します。豪華な車をアンロックし、カスタマイズを行い、レースチャンピオンになりましょう。',
+                'game4-title': 'シティビルダー',
+                'game4-desc': '自分の都市を設計、建設、管理します。都市計画の問題を解決し、リソースのバランスを取り、繁栄する大都市を作り出しましょう。',
+                'learn-more': '詳細を見る →',
+                'footer-copyright': '© 2025 エクストリームゲームズ | 無断複写・転載を禁じます'
+            },
+            'ko': {
+                'site-title': '익스트림 게임즈 | 공식 웹사이트',
+                'site-name': '익스트림 게임즈',
+                'nav-home': '홈',
+                'nav-games': '게임',
+                'nav-download': '다운로드',
+                'nav-news': '뉴스',
+                'nav-about': '회사 소개',
+                'hero-title': '섀도우 라이징: 영원한 여정',
+                'hero-description': '서사시적인 모험을 시작하여 이 오픈 월드에서 미지의 영역을 탐험하고, 다양한 적과 싸우며, 고대 문명의 비밀을 밝혀내세요. 독특한 스킬 트리와 장비 시스템을 통해 캐릭터를 커스터마이징 하세요.',
+                'cta-play': '지금 플레이',
+                'featured-title': '인기 게임',
+                'game1-title': '갤럭시 가디언즈',
+                'game1-desc': '우주에서 스릴 넘치는 전략적 전투를 펼치며 은하계를 외계 위협으로부터 보호하세요. 함대를 구성하고, 무기를 업그레이드하며, 우주를 정복하세요.',
+                'game2-title': '판타지 월드',
+                'game2-desc': '마법과 신비한 생물이 가득한 판타지 세계에 들어가 서사시적인 퀘스트를 완료하고, 친구들과 모험하며, 전설적인 영웅이 되세요.',
+                'game3-title': '트랙 퓨리',
+                'game3-desc': '속도와 흥분을 경험하며 전 세계 트랙에서 상대와 경쟁하세요. 럭셔리 자동차를 잠금 해제하고, 커스터마이징하며, 레이싱 챔피언이 되세요.',
+                'game4-title': '시티 빌더',
+                'game4-desc': '자신만의 도시를 설계, 건설, 관리하세요. 도시 계획 문제를 해결하고, 자원의 균형을 맞추며, 번성하는 대도시를 만드세요.',
+                'learn-more': '더 알아보기 →',
+                'footer-copyright': '© 2025 익스트림 게임즈 | 모든 권리 보유'
+            }
+        };
+
+        // 初始化语言检测和设置
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取浏览器语言
+            let browserLang = navigator.language || navigator.userLanguage;
+            browserLang = browserLang.split('-')[0]; // 只取主要语言代码 (如 "en-US" -> "en")
+            
+            // 检查是否支持该语言，如果不支持则默认英语
+            if (!translations[browserLang]) {
+                browserLang = 'en';
+            }
+            
+            // 根据本地存储中的设置恢复语言选择
+            const savedLang = localStorage.getItem('selectedLanguage');
+            if (savedLang && translations[savedLang]) {
+                browserLang = savedLang;
+            }
+            
+            // 更新语言选择器的值
+            document.getElementById('language-select').value = browserLang;
+            
+            // 应用语言
+            applyLanguage(browserLang);
+            
+            // 设置语言选择器事件监听
+            document.getElementById('language-select').addEventListener('change', function() {
+                const selectedLang = this.value;
+                localStorage.setItem('selectedLanguage', selectedLang);
+                applyLanguage(selectedLang);
+                
+                // 更新html lang属性
+                document.documentElement.lang = selectedLang;
+            });
+        });
+
+        // 应用翻译到页面元素
+        function applyLanguage(lang) {
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    // 针对不同类型的元素应用翻译
+                    if (element.tagName === 'TITLE') {
+                        element.textContent = translations[lang][key];
+                    } else if (element.tagName === 'INPUT' && element.type === 'placeholder') {
+                        element.placeholder = translations[lang][key];
+                    } else {
+                        element.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // 更新html lang属性
+            document.documentElement.lang = lang;
+        }
+    </script>
+</body>
+</html>
